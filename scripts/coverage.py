@@ -143,3 +143,14 @@ class Gcovr(CoverageTool):
                                 "--html-details"] + tracefiles +
                                ["-o", os.path.join(subdir, "index.html")],
                                stdout=coveragelog)
+
+
+def generate_cov_report(options):
+    logger.info("Generating coverage files...")
+    coverage_tool = CoverageTool.factory(options.coverage_tool)
+    coverage_tool.gcov_tool = options.gcov_tool
+    coverage_tool.base_dir = os.path.abspath(options.coverage_basedir)
+    coverage_tool.add_ignore_file('generated')
+    coverage_tool.add_ignore_directory('tests')
+    coverage_tool.add_ignore_directory('samples')
+    coverage_tool.generate(options.outdir)
