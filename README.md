@@ -1,3 +1,5 @@
+## `Code Coverage for Embedded Target with Eclipse, gcc and gcov`
+
 # Requirement
 ## gcovr
 Gcovr provides a utility for managing the use of the GNU gcov utility and generating summarized code coverage results. This command is inspired by the Python coverage.py package, which provides a similar utility for Python.
@@ -12,6 +14,11 @@ Install development version from GitHub:
 ```
 pip install git+https://github.com/gcovr/gcovr.git
 ```
+See: https://gcovr.com/en/stable/index.html
+
+## Eclipse
+
+![](coverage-with-eclipse.png)
 
 # Source tree
 ```
@@ -38,16 +45,17 @@ Run command:
 .\test.bat
 ```
 Report file: report\coverage\index.html
+
 ![](sample.PNG)
 
 
 # Try with your project
 ## Build project
-Add coverage/*, gcov.h to your project
+* Add coverage/, gcov.h to your project
 
-Call gcov_coverage_dump if you want to retrieves gcov coverage data and sends it over the given interface.
+* Call gcov_coverage_dump if you want to retrieves gcov coverage data and sends it over the given interface.
 
-Compile the code for which you want to generate the coverage with these options:
+* Compile the code for which you want to generate the coverage with these options:
 ```
 CFLAGS: -fprofile-arcs -ftest-coverage
 
