@@ -4,6 +4,8 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+#ifdef CONFIG_COVERAGE
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -251,7 +253,7 @@ coverage_dump_end:
 }
 
 /* Initialize the gcov by calling the required constructors */
-#ifdef __REQUIRE_GCOV_INIT__
+#ifdef CONFIG_REQUIRE_GCOV_INIT
 void gcov_static_init(void)
 {
 	extern uintptr_t __init_array_start, __init_array_end;
@@ -267,5 +269,7 @@ void gcov_static_init(void)
 		func_pointer_start += sizeof(p);
 	}
 }
+
+#endif
 
 #endif

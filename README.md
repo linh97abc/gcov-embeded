@@ -53,7 +53,10 @@ Report file: report\coverage\index.html
 # Try with your project
 ## Build project
 * Add coverage/, gcov.h to your project
-
+* Add define CONFIG_COVERAGE
+```
+-DCONFIG_COVERAGE
+```
 * Call gcov_coverage_dump if you want to retrieves gcov coverage data and sends it over the given interface.
 
 * Compile the code for which you want to generate the coverage with these options:
