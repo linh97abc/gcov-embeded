@@ -3,6 +3,8 @@ import subprocess
 import logging
 import re
 import glob
+import sys
+from unicodedata import name
 
 logger = logging.getLogger('Coverage-tool')
 logger.setLevel(logging.DEBUG)
@@ -112,27 +114,17 @@ class Gcovr(CoverageTool):
 
     def _generate(self, outdir, coveragelog):
         coveragefile = os.path.join(outdir, "coverage.json")
-        ztestfile = os.path.join(outdir, "ztest.json")
 
         excludes = Gcovr._interleave_list("-e", self.ignores)
 
-        # We want to remove tests/* and tests/ztest/test/* but save tests/ztest
         cmd = ["gcovr", "-r", self.base_dir, "--gcov-executable",
-               self.gcov_tool, "-e", "tests/*"] + excludes + ["--json", "-o",
+               self.gcov_tool] + excludes + ["--json", "-o",
                coveragefile, outdir]
         cmd_str = " ".join(cmd)
         logger.debug(f"Running {cmd_str}...")
         subprocess.call(cmd, stdout=coveragelog)
 
-        subprocess.call(["gcovr", "-r", self.base_dir, "--gcov-executable",
-                         self.gcov_tool, "-f", "tests/ztest", "-e",
-                         "tests/ztest/test/*", "--json", "-o", ztestfile,
-                         outdir], stdout=coveragelog)
-
-        if os.path.exists(ztestfile) and os.path.getsize(ztestfile) > 0:
-            files = [coveragefile, ztestfile]
-        else:
-            files = [coveragefile]
+        files = [coveragefile]
 
         subdir = os.path.join(outdir, "coverage")
         os.makedirs(subdir, exist_ok=True)
@@ -145,12 +137,18 @@ class Gcovr(CoverageTool):
                                stdout=coveragelog)
 
 
-def generate_cov_report(options):
+def generate_cov_report(coverage_basedir, outdir, gcov_tool):
+    cov_tool = 'gcovr'
+    gcov_tool = 'gcov'
     logger.info("Generating coverage files...")
-    coverage_tool = CoverageTool.factory(options.coverage_tool)
-    coverage_tool.gcov_tool = options.gcov_tool
-    coverage_tool.base_dir = os.path.abspath(options.coverage_basedir)
-    coverage_tool.add_ignore_file('generated')
-    coverage_tool.add_ignore_directory('tests')
-    coverage_tool.add_ignore_directory('samples')
-    coverage_tool.generate(options.outdir)
+    coverage_tool = CoverageTool.factory(cov_tool)
+    coverage_tool.gcov_tool = gcov_tool
+    coverage_tool.base_dir = os.path.abspath(coverage_basedir)
+    # coverage_tool.add_ignore_file('generated')
+    # coverage_tool.add_ignore_directory('tests')
+    coverage_tool.generate(outdir)
+
+if __name__ == "main":
+    coverage_basedir = sys.argv[1]
+    outdir = sys.argv[2]
+    generate_cov_report(coverage_basedir, outdir)

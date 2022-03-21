@@ -38,7 +38,7 @@ LFLAGS: -lgcov --coverage
 ```
 
 # Collect coverage data
-Run excutable file. Coverage data will be display on console. Copy them to `handler.log` file
+Run excutable file. Coverage data will be display on console. Copy them to `handler.log` file and save in report folder.
 
 This is example coverage data:
 ```
@@ -51,7 +51,7 @@ GCOV_COVERAGE_DUMP_END
 
 # Generate coverage report
 ```
-python scripts/coverage.py -p <project_dir> -l <handler_log> -o <out_dir>
+python scripts/coverage.py <project_dir> <report_folder>
 ```
 
 # Limitation
