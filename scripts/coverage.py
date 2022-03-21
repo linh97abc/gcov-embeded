@@ -137,7 +137,7 @@ class Gcovr(CoverageTool):
                                stdout=coveragelog)
 
 
-def generate_cov_report(coverage_basedir, outdir, gcov_tool):
+def generate_cov_report(coverage_basedir, outdir):
     cov_tool = 'gcovr'
     gcov_tool = 'gcov'
     logger.info("Generating coverage files...")
@@ -148,7 +148,7 @@ def generate_cov_report(coverage_basedir, outdir, gcov_tool):
     # coverage_tool.add_ignore_directory('tests')
     coverage_tool.generate(outdir)
 
-if __name__ == "main":
+if __name__ == "__main__":
     coverage_basedir = sys.argv[1]
     outdir = sys.argv[2]
     generate_cov_report(coverage_basedir, outdir)

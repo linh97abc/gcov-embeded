@@ -15,8 +15,13 @@ pip install git+https://github.com/gcovr/gcovr.git
 
 # Source tree
 ```
+report
+|__coverage/index.html -- Example coverage report
+...
+test.cpp        -- example code
+test.bat        -- script build and run example 
 scripts
-|__coverage.py -- Tool generate coverage report from coverage data
+|__coverage.py  -- Tool generate coverage report from coverage data
 coverage
 |__ coverage.c
 |__ coverage.h
@@ -25,7 +30,19 @@ gcov.h
 
 ```
 
-# Build project
+# Run example:
+Delete folder report
+
+Run command:
+```
+.\test.bat
+```
+Report file: report\coverage\index.html
+![](sample.PNG)
+
+
+# Try with your project
+## Build project
 Add coverage/*, gcov.h to your project
 
 Call gcov_coverage_dump if you want to retrieves gcov coverage data and sends it over the given interface.
@@ -37,7 +54,7 @@ CFLAGS: -fprofile-arcs -ftest-coverage
 LFLAGS: -lgcov --coverage
 ```
 
-# Collect coverage data
+## Collect coverage data
 Run excutable file. Coverage data will be display on console. Copy them to `handler.log` file and save in report folder.
 
 This is example coverage data:
@@ -49,7 +66,7 @@ GCOV_COVERAGE_DUMP_START
 GCOV_COVERAGE_DUMP_END
 ```
 
-# Generate coverage report
+## Generate coverage report
 ```
 python scripts/coverage.py <project_dir> <report_folder>
 ```
