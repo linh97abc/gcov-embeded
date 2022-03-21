@@ -18,14 +18,15 @@ See: https://gcovr.com/en/stable/index.html
 
 ## Eclipse
 
-![](coverage-with-eclipse.png)
+![sample](coverage-with-eclipse.png)
 
 # Source tree
 ```
 report
 |__coverage/index.html -- Example coverage report
 ...
-test.cpp        -- example code
+sample
+|__test.cpp     -- example code
 test.bat        -- script build and run example 
 scripts
 |__coverage.py  -- Tool generate coverage report from coverage data
@@ -33,7 +34,7 @@ coverage
 |__ coverage.c
 |__ coverage.h
 |__ gcov-port.h -- Porting some function for specific platform
-gcov.h
+|__ gcov.h
 
 ```
 
@@ -46,7 +47,7 @@ Run command:
 ```
 Report file: report\coverage\index.html
 
-![](sample.PNG)
+![sample](sample.PNG)
 
 
 # Try with your project

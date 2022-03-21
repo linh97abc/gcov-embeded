@@ -2,7 +2,7 @@
 using namespace std;
 
 #define CONFIG_COVERAGE_GCOV
-#include "gcov.h"
+#include "../coverage/gcov.h"
 
 class Singleton
 {

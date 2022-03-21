@@ -10,16 +10,7 @@
 #include <errno.h>
 #include "coverage.h"
 #include "gcov-port.h"
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-void gcov_coverage_dump(void);
-void gcov_static_init(void);
-
-#ifdef __cplusplus
-}
-#endif
+#include "gcov.h"
 
 static struct gcov_info *gcov_info_head = NULL;
 
