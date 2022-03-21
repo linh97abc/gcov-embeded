@@ -18,7 +18,7 @@ See: https://gcovr.com/en/stable/index.html
 
 ## Eclipse
 
-![sample](coverage-with-eclipse.png)
+![coverage report](sample/coverage-with-eclipse.png)
 
 # Source tree
 ```
@@ -47,7 +47,7 @@ Run command:
 ```
 Report file: report\coverage\index.html
 
-![sample](sample.PNG)
+![example coverage report](sample/sample.PNG)
 
 
 # Try with your project
