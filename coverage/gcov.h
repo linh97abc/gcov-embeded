@@ -14,13 +14,13 @@ extern "C" {
 #if defined(CONFIG_COVERAGE) && defined(CONFIG_GCOV_STATIC_INIT)
 void gcov_static_init(void);
 #else
-#define gcov_static_init() ((void)0)
+static inline void gcov_static_init(void) {}
 #endif
 
 #ifdef CONFIG_COVERAGE
 void gcov_coverage_dump(void);
 #else
-#define gcov_coverage_dump() ((void)0)
+static inline void gcov_coverage_dump(void) {}
 #endif
 
 #ifdef __cplusplus

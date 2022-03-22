@@ -9,8 +9,8 @@
 #define GCOV_BUFF_STATIC_ALLOCATE
 #define GCOV_BUFF_SIZE 16384
 
-#define OS_ENTER_CRITICAL() (void)0
-#define OS_EXIT_CRITICAL() (void)0
+static inline void OS_ENTER_CRITICAL(void) {}
+static inline void OS_EXIT_CRITICAL(void) {}
 #define GCOV_PRINT printf
 
 static void dump_on_console(const char *filename, char *ptr, size_t len)
