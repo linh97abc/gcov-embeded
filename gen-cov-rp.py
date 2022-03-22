@@ -148,6 +148,14 @@ if __name__ == "__main__":
     gcov_tool = sys.argv[1].replace('\\', '/')
     coverage_basedir = sys.argv[2]
     outdir = sys.argv[3]
+    
+    fh = logging.FileHandler(os.path.join(outdir, "gen-cov-rp.log"))
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s'))
+    ch = logging.StreamHandler()
+    ch.setFormatter(logging.Formatter('%(levelname)-7s - %(message)s'))
+    logger.addHandler(ch)
+    logger.addHandler(fh)
 
     cov_tool = 'gcovr'
     logger.info("Generating coverage files...")
