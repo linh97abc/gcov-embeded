@@ -142,11 +142,12 @@ class Gcovr(CoverageTool):
 
 
 if __name__ == "__main__":
-    coverage_basedir = sys.argv[1]
-    outdir = sys.argv[2]
+    gcov_tool = sys.argv[1].replace('\\', '/')
+
+    coverage_basedir = sys.argv[2]
+    outdir = sys.argv[3]
 
     cov_tool = 'gcovr'
-    gcov_tool = 'gcov'
     logger.info("Generating coverage files...")
     coverage_tool = CoverageTool.factory(cov_tool)
     coverage_tool.gcov_tool = gcov_tool

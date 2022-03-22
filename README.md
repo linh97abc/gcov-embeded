@@ -81,7 +81,7 @@ GCOV_COVERAGE_DUMP_END
 
 ## Generate coverage report
 ```
-python gen-cov-rp.py <project_dir> <report_folder>
+python gen-cov-rp.py <gcov_cmd> <project_dir> <report_folder>
 ```
 
 # Limitation
