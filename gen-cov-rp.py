@@ -4,10 +4,14 @@ import logging
 import re
 import glob
 import sys
-from unicodedata import name
 
 logger = logging.getLogger('Coverage-tool')
 logger.setLevel(logging.DEBUG)
+
+GCOV_COVERAGE_DUMP_START = "GCOV_COVERAGE_DUMP_START"
+GCOV_COVERAGE_DUMP_END = "GCOV_COVERAGE_DUMP_END"
+FILE_START_INDICATOR = '*'
+GCOV_DUMP_SEPARATOR	= '<'
 
 class CoverageTool:
     """ Base class for every supported coverage tool
@@ -36,17 +40,17 @@ class CoverageTool:
         capture_complete = False
         with open(input_file, 'r') as fp:
             for line in fp.readlines():
-                if re.search("GCOV_COVERAGE_DUMP_START", line):
+                if re.search(GCOV_COVERAGE_DUMP_START, line):
                     capture_data = True
                     continue
-                if re.search("GCOV_COVERAGE_DUMP_END", line):
+                if re.search(GCOV_COVERAGE_DUMP_END, line):
                     capture_complete = True
                     break
                 # Loop until the coverage data is found.
                 if not capture_data:
                     continue
-                if line.startswith("*"):
-                    sp = line.split("<")
+                if line.startswith(FILE_START_INDICATOR):
+                    sp = line.split(GCOV_DUMP_SEPARATOR)
                     if len(sp) > 1:
                         # Remove the leading delimiter "*"
                         file_name = sp[0][1:]
@@ -137,7 +141,10 @@ class Gcovr(CoverageTool):
                                stdout=coveragelog)
 
 
-def generate_cov_report(coverage_basedir, outdir):
+if __name__ == "__main__":
+    coverage_basedir = sys.argv[1]
+    outdir = sys.argv[2]
+
     cov_tool = 'gcovr'
     gcov_tool = 'gcov'
     logger.info("Generating coverage files...")
@@ -147,8 +154,3 @@ def generate_cov_report(coverage_basedir, outdir):
     # coverage_tool.add_ignore_file('generated')
     # coverage_tool.add_ignore_directory('tests')
     coverage_tool.generate(outdir)
-
-if __name__ == "__main__":
-    coverage_basedir = sys.argv[1]
-    outdir = sys.argv[2]
-    generate_cov_report(coverage_basedir, outdir)
