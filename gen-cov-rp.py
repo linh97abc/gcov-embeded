@@ -1,4 +1,5 @@
 import os
+import shlex
 import subprocess
 import logging
 import re
@@ -20,6 +21,7 @@ class CoverageTool:
     def __init__(self):
         self.gcov_tool = None
         self.base_dir = None
+        self.gen_html = True
 
     @staticmethod
     def factory(tool):
@@ -93,11 +95,12 @@ class CoverageTool:
             else:
                 logger.error("Gcov data capture incomplete: {}".format(filename))
 
-        with open(os.path.join(outdir, "coverage.log"), "a") as coveragelog:
-            ret = self._generate(outdir, coveragelog)
-            if ret == 0:
-                logger.info("HTML report generated: {}".format(
-                    os.path.join(outdir, "coverage", "index.html")))
+        if self.gen_html:
+            with open(os.path.join(outdir, "coverage.log"), "a") as coveragelog:
+                ret = self._generate(outdir, coveragelog)
+                if ret == 0:
+                    logger.info("HTML report generated: {}".format(
+                        os.path.join(outdir, "coverage", "index.html")))
 
 class Gcovr(CoverageTool):
 
@@ -143,13 +146,23 @@ class Gcovr(CoverageTool):
 
 if __name__ == "__main__":
     gcov_tool = sys.argv[1].replace('\\', '/')
-
     coverage_basedir = sys.argv[2]
     outdir = sys.argv[3]
 
     cov_tool = 'gcovr'
     logger.info("Generating coverage files...")
     coverage_tool = CoverageTool.factory(cov_tool)
+
+    cmd = shlex.split(gcov_tool)
+    try:    
+        subprocess.check_call(cmd, stdout= subprocess.PIPE, stderr=subprocess.PIPE)
+    except(subprocess.CalledProcessError):
+        pass
+    except(FileNotFoundError):
+        coverage_tool.gen_html = False
+        logger.info("File not found: " + cmd[0])
+        logger.warning("Not generate html report")
+
     coverage_tool.gcov_tool = gcov_tool
     coverage_tool.base_dir = os.path.abspath(coverage_basedir)
     # coverage_tool.add_ignore_file('generated')
