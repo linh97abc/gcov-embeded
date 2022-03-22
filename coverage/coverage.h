@@ -38,6 +38,8 @@
 #define GCOV_COUNTERS 10U
 #endif
 
+#include <stdint.h>
+
 typedef uint64_t gcov_type;
 
 #define GCOV_TAG_FUNCTION_LENGTH  3

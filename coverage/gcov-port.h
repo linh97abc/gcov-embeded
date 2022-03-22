@@ -2,10 +2,8 @@
 #define _GCOV_PORT_H_
 
 #include <stdint.h>
-#include <errno.h>
 #include "coverage.h"
 
-#include <stdlib.h>
 #include <stdio.h>
 
 #define GCOV_BUFF_STATIC_ALLOCATE

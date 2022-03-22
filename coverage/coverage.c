@@ -6,13 +6,15 @@
 
 #ifdef CONFIG_COVERAGE
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdint.h>
-#include <errno.h>
+#include <stddef.h>
 #include "coverage.h"
 #include "gcov-port.h"
 #include "gcov.h"
+
+#ifndef GCOV_BUFF_STATIC_ALLOCATE
+#include <stdlib.h>
+#endif
 
 static struct gcov_info *gcov_info_head = NULL;
 
