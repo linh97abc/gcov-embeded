@@ -219,13 +219,13 @@ void gcov_coverage_dump(void)
 
 #ifndef GCOV_BUFF_STATIC_ALLOCATE
 		buffer = (uint8_t *)malloc(size);
-#endif
+
 		if (!buffer)
 		{
 			GCOV_PRINT("No Mem available to continue dump\n");
 			goto coverage_dump_end;
 		}
-
+#endif
 		written_size = populate_buffer(buffer, gcov_list);
 		if (written_size != size)
 		{
@@ -253,7 +253,7 @@ coverage_dump_end:
 }
 
 /* Initialize the gcov by calling the required constructors */
-#ifdef CONFIG_REQUIRE_GCOV_INIT
+#ifdef CONFIG_GCOV_STATIC_INIT
 void gcov_static_init(void)
 {
 	extern uintptr_t __init_array_start, __init_array_end;
